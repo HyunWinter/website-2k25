@@ -9,9 +9,15 @@ interface NavbarLink {
 
 export const Navbar = async () => {
   const [projectsCount, postsCount, companyInfo] = await Promise.all([
-    fetchProjectsCount(),
-    fetchPostsCount(),
-    fetchCompanyInfo()
+    fetchProjectsCount().catch(() => 0),
+    fetchPostsCount().catch(() => 0),
+    fetchCompanyInfo().catch(() => ({
+      twitter: null,
+      instagram: null,
+      github: null,
+      linkedIn: null,
+      newsletter: null
+    }))
   ])
 
   const LINKS: NavbarLink[] = [

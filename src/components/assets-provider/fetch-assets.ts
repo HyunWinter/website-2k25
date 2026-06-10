@@ -37,7 +37,6 @@ export interface AssetsResult {
     idleScreen: string
     placeholderLab: string
     boot: string
-    shaderLab: string
     chronicles: string
     looper: string
     palm: string
@@ -167,6 +166,6 @@ export interface AssetsResult {
   }[]
 }
 
-export const fetchAssets = cache(
-  async (): Promise<AssetsResult> => fetchAssetsLocal()
-)
+export const fetchAssets = cache(async (): Promise<AssetsResult> => {
+  return fetchAssetsLocal()
+})

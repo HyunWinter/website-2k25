@@ -68,37 +68,35 @@ export const ArcadeLabsList = ({
 
   useEffect(() => {
     if (scrollContainerRef.current) {
-      const setScroll = (y: number) => {
+      // reset scroll
+      if (labTabIndex <= 6) {
         if (scrollContainerRef.current.scrollPosition.value) {
-          scrollContainerRef.current.scrollPosition.value = [0, y]
+          scrollContainerRef.current.scrollPosition.value = [0, 0]
         } else {
-          scrollContainerRef.current.scrollPosition.v = [0, y]
+          scrollContainerRef.current.scrollPosition.v = [0, 0]
         }
         scrollContainerRef.current.forceUpdate?.()
-      }
-
-      const scrollStep = 24
-      const maxScroll = 277
-
-      if (labTabIndex > experiments.length + 1) {
         return
       }
 
-      // View More: snap the list to the bottom once.
-      if (labTabIndex === experiments.length + 1) {
-        setScroll(maxScroll)
-        return
-      }
+      if (labTabIndex >= 7) {
+        const scrollStep = 24
+        const maxScroll = 277
+        const scrollOffset = (labTabIndex - 7) * scrollStep
 
-      if (labTabIndex <= 6) {
-        setScroll(0)
-        return
-      }
+        const newScroll =
+          scrollOffset <= 0 ? 0 : Math.min(scrollOffset, maxScroll)
 
-      const scrollOffset = (labTabIndex - 7) * scrollStep
-      setScroll(scrollOffset <= 0 ? 0 : Math.min(scrollOffset, maxScroll))
+        if (scrollContainerRef.current.scrollPosition.value) {
+          scrollContainerRef.current.scrollPosition.value = [0, newScroll]
+        } else {
+          scrollContainerRef.current.scrollPosition.v = [0, newScroll]
+        }
+
+        scrollContainerRef.current.forceUpdate?.()
+      }
     }
-  }, [labTabIndex, experiments.length])
+  }, [labTabIndex])
 
   return (
     <Container
@@ -274,7 +272,7 @@ const ViewMore = ({
     window.open("https://lab.basement.studio/", "_blank")
   }, [])
 
-  const isSelected = isInLabTab && labTabIndex === experiments.length - 4
+  const isSelected = isInLabTab && labTabIndex === experiments.length - 3
 
   useKeyPress(
     "Enter",

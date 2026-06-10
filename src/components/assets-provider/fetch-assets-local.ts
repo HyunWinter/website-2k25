@@ -1,7 +1,7 @@
 import { ASSETS_BASE, INSPECTABLES_META } from "@/lib/3d-config/asset-manifest"
+import { LOCAL_3D_CONFIG } from "@/lib/3d-config/local-3d-config"
 import type { PortableTextBlock } from "@/service/sanity/types"
 
-import { fetchThreeDConfig } from "./fetch-3d-config-sanity"
 import type { AssetsResult } from "./fetch-assets"
 
 // One log per missing inspectable per process — without dedup the warn loop
@@ -10,7 +10,8 @@ const warnedMissingInspectables = new Set<string>()
 
 /** Joins the repo manifest with Sanity content into one `AssetsResult`. */
 export async function fetchAssetsLocal(): Promise<AssetsResult> {
-  const config = await fetchThreeDConfig()
+  // 3D config (scenes, inspectables, physics) is now fully local — no Sanity.
+  const config = LOCAL_3D_CONFIG
 
   const inspectableContentById = new Map(
     (config.inspectables ?? []).map((c) => [c.inspectableId ?? "", c])

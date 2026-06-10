@@ -76,18 +76,8 @@ export const createLabTabs = (experiments: Experiment[]): LabTab[] => {
     {
       id: "looper",
       type: "featured",
-      title: "LOOPER",
-      url: "https://looper.basement.studio/",
-      isClickable: true
-    },
-
-    // Shader Lab
-    {
-      id: "shaderlab",
-      type: "featured",
-      title: "SHADER LAB",
-      url: "https://eng.basement.studio/tools/shader-lab",
-      isClickable: true
+      title: "LOOPER (COMING SOON)",
+      isClickable: false
     }
   ]
 
@@ -99,8 +89,7 @@ export const ScreenUI = ({ onLoad, visible }: ScreenUIProps) => {
   onLoadRef.current = onLoad
 
   const [experiments, setExperiments] = useState<Experiment[]>([])
-  const [selectedExperiment, setSelectedExperiment] =
-    useState<Experiment | null>(null)
+  const [selectedExperiment, setSelectedExperiment] = useState<Experiment | null>(null)
 
   // Font URL for react-three/uikit
   const fontFamilies = useMemo(
